@@ -1,0 +1,25 @@
+{
+  "name": "rx-lab",
+  "version": "0.0.1",
+  "description": "rxjs lab",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjw56/rx-lab.git"
+  },
+  "keywords": [
+    "rxjs"
+  ],
+  "author": "Mike Wilcox <mwilcox56@gmail.com> (http://github.com/mjw56)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mjw56/rx-lab/issues"
+  },
+  "homepage": "https://github.com/mjw56/rx-lab",
+  "devDependencies": {
+    "rx": "^2.3.22"
+  }
+}
