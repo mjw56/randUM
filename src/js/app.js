@@ -10,8 +10,9 @@ let App = React.createClass({
   render() {
     return (
       <div className="container">
-      <Header />
-      <RouteHandler/>
+        <Header />
+        
+        <RouteHandler/>
       </div>
     );
   }
@@ -19,7 +20,7 @@ let App = React.createClass({
 });
 
 let routes = <Route handler={App}>
-<DefaultRoute name="home" handler={Home}/>
+  <DefaultRoute name="home" handler={Home}/>
 </Route>
 
 Router.run(routes, function(Handler) {
