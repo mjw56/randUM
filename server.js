@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import config from './webpack.config';
 import express from 'express';
+import umphAPI from './src/js/utils/umph-api'
 
 const api = express()
 .get('/reddit', (req, res) => {
@@ -17,6 +18,8 @@ const app = express()
 
 app.use('/api', api)
 .listen(3001)
+
+umphAPI.crawler();
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
