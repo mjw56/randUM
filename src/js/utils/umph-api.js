@@ -16,7 +16,6 @@ const umphAPI = module.exports = {
   },
 
   getTrackLinks(url) {
-
     let self = this,
         songs = [];
 
@@ -24,24 +23,25 @@ const umphAPI = module.exports = {
       request(url, (error, response, html) => {
         if (!error) {
           let $ = cheerio.load(html),
-              index = $('table.fileFormats thead tr th').filter(
-            function() {
+
+          index = $('table.fileFormats thead tr th')
+            .filter(function() {
               return $(this).text() === 'VBR MP3';
             }).index();
 
-            if(index) {
-              index++;
-              $('table.fileFormats tbody tr td:nth-child(' + index + ') a').each( function(){
+          if(index) {
+            index++;
+            
+            $('table.fileFormats tbody tr td:nth-child(' + index + ') a')
+              .each( function(){
                 songs.push( $(this).attr('href') );
               });
 
-              resolve(songs);
-            }
+            resolve(songs);
+          }
         }
-
       });
     });
-
   }
 
 };
