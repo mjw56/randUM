@@ -6,13 +6,11 @@ import { Promise } from 'es6-promise';
 const umphAPI = module.exports = {
 
   getATrack: function() {
-    let self = this;
-
     return new Promise((resolve, reject) => {
-      archive.search({q: 'taper:kevin browning'}, function(err, res) {
+      archive.search({q: 'taper:kevin browning'}, (err, res) => {
         var shows = res.response.docs;
 
-        self.getTrackLinks('https://archive.org/details/' + shows[Math.floor(Math.random() * shows.length)].identifier)
+        this.getTrackLinks('https://archive.org/details/' + shows[Math.floor(Math.random() * shows.length)].identifier)
           .then((links) => {
             resolve('http://archive.org' + links[Math.floor(Math.random() * links.length)]);
           });
@@ -21,8 +19,7 @@ const umphAPI = module.exports = {
   },
 
   getTrackLinks(url) {
-    let self = this,
-        songs = [];
+    let songs = [];
 
     return new Promise((resolve, reject) => {
       request(url, (error, response, html) => {
