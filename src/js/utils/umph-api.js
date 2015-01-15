@@ -5,13 +5,18 @@ import { Promise } from 'es6-promise';
 
 const umphAPI = module.exports = {
 
-  crawler: function() {
+  getATrack: function() {
     let self = this;
-    archive.search({q: 'taper:kevin browning'}, function(err, res) {
-      self.getTrackLinks('https://archive.org/details/' + res.response.docs[0].identifier)
-        .then(function(links) {
-          console.log(links);
-        });
+
+    return new Promise((resolve, reject) => {
+      archive.search({q: 'taper:kevin browning'}, function(err, res) {
+        var shows = res.response.docs;
+
+        self.getTrackLinks('https://archive.org/details/' + shows[Math.floor(Math.random() * shows.length)].identifier)
+          .then((links) => {
+            resolve('http://archive.org' + links[Math.floor(Math.random() * links.length)]);
+          });
+      });
     });
   },
 
@@ -31,10 +36,13 @@ const umphAPI = module.exports = {
 
           if(index) {
             index++;
-            
+
+            var reg = new RegExp('^.*\.(mp3)$')
+
             $('table.fileFormats tbody tr td:nth-child(' + index + ') a')
               .each( function(){
-                songs.push( $(this).attr('href') );
+                if(reg.test($(this).attr('href') ))
+                  songs.push( $(this).attr('href') );
               });
 
             resolve(songs);
