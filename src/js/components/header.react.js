@@ -18,12 +18,12 @@ export default React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">RxJS Lab</a>
+            <a className="navbar-brand" href="#">RandUM</a>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
               <li className="active"><Link to="home">Home</Link></li>
-              <li><a href="#">About</a></li>
+              <li><a href="#">Shows</a></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <form className="navbar-form navbar-left" role="search">
