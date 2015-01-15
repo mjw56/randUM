@@ -5,9 +5,11 @@ import express from 'express';
 import umphAPI from './src/js/utils/umph-api'
 
 const api = express()
-.get('/reddit', (req, res) => {
-
-});
+  .get('/track', (req, res) => {
+    umphAPI.getATrack().then((track) => {
+      res.send(track);
+    });
+  });
 
 const app = express()
 .all('/*', (req, res, next) => {
@@ -18,8 +20,6 @@ const app = express()
 
 app.use('/api', api)
 .listen(3001)
-
-umphAPI.crawler();
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
