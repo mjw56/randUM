@@ -20,9 +20,10 @@ export default React.createClass({
 
         this.setState({
           shows: shows,
+          show: show,
           audio: track.link,
           track: track.title,
-          show: show.title
+          showTitle: show.title
         });
       });
   },
@@ -32,7 +33,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <p className={this.sheet.classes['.track-title']}>{ this.state.show }</p>
+        <p className={this.sheet.classes['.track-title']}>{ this.state.showTitle }</p>
         <p className={this.sheet.classes['.track-title']}>{ this.state.track }</p>
         { this.state.audio ? <Cassette containerClass='jss-1' src={this.state.audio} /> : <div /> }
       </div>
