@@ -8,13 +8,22 @@ import { Promise } from 'es6-promise';
 export default React.createClass({
 
   getInitialState: function() {
-    return { audio: '' };
+    return { shows: [], audio: '', title: '', show: '' };
   },
 
   componentDidMount: function() {
     Promise.resolve($.ajax('http://localhost:3001/api/track'))
-      .then((track) => {
-        this.setState( { audio: track });
+      .then((shows) => {
+
+        var show = shows[Math.floor(Math.random() * shows.length)];
+        var track = show.songs[Math.floor(Math.random() * show.songs.length)];
+
+        this.setState({
+          shows: shows,
+          audio: track.link,
+          track: track.title,
+          show: show.title
+        });
       });
   },
 
@@ -23,7 +32,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        { this.state.audio ? <Cassette src={this.state.audio} /> : <div /> }
+        <p className={this.sheet.classes['.track-title']}>{ this.state.show }</p>
+        <p className={this.sheet.classes['.track-title']}>{ this.state.track }</p>
+        { this.state.audio ? <Cassette containerClass='jss-1' src={this.state.audio} /> : <div /> }
       </div>
     );
   }

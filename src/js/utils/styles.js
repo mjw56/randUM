@@ -2,16 +2,19 @@ export default styles = {
 
   'home': {
 
-    'h1': {
-      'color': 'blue'
+    '.track-title': {
+      'font-size': '3em',
+      'position': 'relative',
+      'text-align': 'center'
     },
-    '.foo': {
-      'color': 'orange'
+
+    '.tape-deck': {
+      'height': '50em'
     }
 
   },
 
   'header': {
-    
+
   }
 };

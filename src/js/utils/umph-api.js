@@ -8,18 +8,24 @@ const umphAPI = module.exports = {
   getATrack: function() {
     return new Promise((resolve, reject) => {
       archive.search({q: 'taper:kevin browning'}, (err, res) => {
+
         var shows = res.response.docs;
 
-        this.getTrackLinks('https://archive.org/details/' + shows[Math.floor(Math.random() * shows.length)].identifier)
-          .then((links) => {
-            resolve('http://archive.org' + links[Math.floor(Math.random() * links.length)]);
-          });
+        var tasks = shows.map((show) => {
+          return this.getTrackLinks(show);
+        });
+
+        Promise.all(tasks).then((shows) => {
+          resolve(shows);
+        });
+
       });
     });
   },
 
-  getTrackLinks(url) {
-    let songs = [];
+  getTrackLinks(data) {
+    let url = 'https://archive.org/details/' + data.identifier,
+        show = { title: data.title, songs: [] };
 
     return new Promise((resolve, reject) => {
       request(url, (error, response, html) => {
@@ -36,13 +42,18 @@ const umphAPI = module.exports = {
 
             var reg = new RegExp('^.*\.(mp3)$')
 
-            $('table.fileFormats tbody tr td:nth-child(' + index + ') a')
+            $('table.fileFormats tbody tr')
               .each( function(){
-                if(reg.test($(this).attr('href') ))
-                  songs.push( $(this).attr('href') );
+
+                if(reg.test($(this).find('td:nth-child(' + index + ') a').attr('href'))) {
+                  show.songs.push({
+                    title: $(this).find('td:nth-child(1)').text(),
+                    link: 'https://archive.org' + $(this).find('td:nth-child(' + index + ') a').attr('href')
+                  });
+                }
               });
 
-            resolve(songs);
+            resolve(show);
           }
         }
       });
