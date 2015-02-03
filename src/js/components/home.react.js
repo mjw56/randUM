@@ -11,6 +11,10 @@ export default React.createClass({
     return { shows: [], audio: '', title: '', show: '' };
   },
 
+  componentWillReceiveProps: function() {
+    console.log('nailed it!')
+  },
+
   componentDidMount: function() {
     Promise.resolve($.ajax('http://localhost:3001/api/track'))
       .then((shows) => {
@@ -28,6 +32,18 @@ export default React.createClass({
       });
   },
 
+  _getRandUMTrack() {
+    var show = this.state.shows[Math.floor(Math.random() * this.state.shows.length)];
+    var track = show.songs[Math.floor(Math.random() * show.songs.length)];
+
+    this.setState({
+      show: show,
+      audio: track.link,
+      track: track.title,
+      showTitle: show.title
+    });
+  },
+
   mixins: [useSheet(style.home)],
 
   render() {
@@ -36,6 +52,7 @@ export default React.createClass({
         <p className={this.sheet.classes['.track-title']}>{ this.state.showTitle }</p>
         <p className={this.sheet.classes['.track-title']}>{ this.state.track }</p>
         { this.state.audio ? <Cassette containerClass='jss-1' src={this.state.audio} /> : <div /> }
+        <button onClick={this._getRandUMTrack}>Get randUM track></button>
       </div>
     );
   }
