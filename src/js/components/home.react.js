@@ -11,10 +11,6 @@ export default React.createClass({
     return { shows: [], audio: '', title: '', show: '' };
   },
 
-  componentWillReceiveProps: function() {
-    console.log('nailed it!')
-  },
-
   componentDidMount: function() {
     Promise.resolve($.ajax('http://localhost:3001/api/track'))
       .then((shows) => {
