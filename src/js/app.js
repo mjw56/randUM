@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as Router from 'react-router';
+import React from 'react';
+import Router from 'react-router';
 import Header from './components/header.react';
 import Home from './components/home.react';
 
@@ -20,7 +20,7 @@ let App = React.createClass({
 });
 
 let routes = <Route handler={App}>
-  <DefaultRoute name="home" handler={Home}/>
+  <DefaultRoute name="home"   handler={Home}/>
 </Route>
 
 Router.run(routes, function(Handler) {

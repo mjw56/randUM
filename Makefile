@@ -6,4 +6,4 @@ hello:
 	@echo "\n${WELCOME}\n"
 
 webpack:
-	@6to5-node server.js
+	@babel-node server.js

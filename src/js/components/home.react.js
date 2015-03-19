@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import $ from 'jquery';
 import style from '../utils/styles';
 import useSheet from 'react-jss';
@@ -31,6 +31,8 @@ export default React.createClass({
   _getRandUMTrack() {
     var show = this.state.shows[Math.floor(Math.random() * this.state.shows.length)];
     var track = show.songs[Math.floor(Math.random() * show.songs.length)];
+
+    console.log('shows: ', this.state.shows);
 
     this.setState({
       show: show,
