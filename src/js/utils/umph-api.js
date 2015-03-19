@@ -3,7 +3,8 @@ import cheerio from 'cheerio';
 import request from 'request';
 import { Promise } from 'es6-promise';
 
-const umphAPI = module.exports = {
+export default {
+
 
   getATrack: function() {
     return new Promise((resolve, reject) => {
@@ -24,15 +25,18 @@ const umphAPI = module.exports = {
   },
 
   getTrackLinks(data) {
+
     let url = 'https://archive.org/details/' + data.identifier,
         show = { title: data.title, songs: [] };
 
     return new Promise((resolve, reject) => {
       request(url, (error, response, html) => {
         if (!error) {
-          let $ = cheerio.load(html),
+          let $ = cheerio.load(html);
 
-          index = $('table.fileFormats thead tr th')
+          console.log(response);
+
+          let index = $('table.fileFormats thead tr th')
             .filter(function() {
               return $(this).text() === 'VBR MP3';
             }).index();
@@ -40,18 +44,17 @@ const umphAPI = module.exports = {
           if(index) {
             index++;
 
-            var reg = new RegExp('^.*\.(mp3)$')
+            var reg = new RegExp('^.*\.(mp3)$');
 
-            $('table.fileFormats tbody tr')
-              .each( function(){
+            $('table.fileFormats tbody tr').each(function() {
 
-                if(reg.test($(this).find('td:nth-child(' + index + ') a').attr('href'))) {
-                  show.songs.push({
-                    title: $(this).find('td:nth-child(1)').text(),
-                    link: 'https://archive.org' + $(this).find('td:nth-child(' + index + ') a').attr('href')
-                  });
-                }
-              });
+              if(reg.test($(this).find('td:nth-child(' + index + ') a').attr('href'))) {
+                show.songs.push({
+                  title: $(this).find('td:nth-child(1)').text(),
+                  link: 'https://archive.org' + $(this).find('td:nth-child(' + index + ') a').attr('href')
+                });
+              }
+            });
 
             resolve(show);
           }
