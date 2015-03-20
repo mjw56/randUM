@@ -6,7 +6,7 @@ import umphAPI from './src/js/utils/umph-api'
 
 const api = express()
   .get('/track', (req, res) => {
-    umphAPI.getATrack().then((track) => {
+    umphAPI.getShows().then((track) => {
       res.send(track);
     });
   });

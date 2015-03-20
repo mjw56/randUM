@@ -5,8 +5,7 @@ import { Promise } from 'es6-promise';
 
 export default {
 
-
-  getATrack: function() {
+  getShows: function() {
     return new Promise((resolve, reject) => {
       archive.search({q: 'taper:kevin browning'}, (err, res) => {
 
@@ -34,7 +33,15 @@ export default {
         if (!error) {
           let $ = cheerio.load(html);
 
-
+          $('table tbody tr').each(function() {
+            if($(this).find('td:nth-child(3) b').text() === 'VBR MP3') {
+              show.songs.push({
+                title: $(this).find('td:nth-child(2) a').text(),
+                link: 'https://archive.org' + $(this).find('td:nth-child(2) a').attr('href')
+              });
+            }
+          });
+          resolve(show);
         }
       });
     });
