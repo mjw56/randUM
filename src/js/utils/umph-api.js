@@ -26,7 +26,7 @@ export default {
 
   getTrackLinks(data) {
 
-    let url = 'https://archive.org/details/' + data.identifier,
+    let url = 'https://archive.org/download/' + data.identifier,
         show = { title: data.title, songs: [] };
 
     return new Promise((resolve, reject) => {
@@ -34,30 +34,15 @@ export default {
         if (!error) {
           let $ = cheerio.load(html);
 
-          console.log(response);
-
-          let index = $('table.fileFormats thead tr th')
-            .filter(function() {
-              return $(this).text() === 'VBR MP3';
-            }).index();
-
-          if(index) {
-            index++;
-
-            var reg = new RegExp('^.*\.(mp3)$');
-
-            $('table.fileFormats tbody tr').each(function() {
-
-              if(reg.test($(this).find('td:nth-child(' + index + ') a').attr('href'))) {
-                show.songs.push({
-                  title: $(this).find('td:nth-child(1)').text(),
-                  link: 'https://archive.org' + $(this).find('td:nth-child(' + index + ') a').attr('href')
-                });
-              }
-            });
-
-            resolve(show);
-          }
+          $('table tbody tr').each(function() {
+            if($(this).find('td:nth-child(3) b').text() === 'VBR MP3') {
+              show.songs.push({
+                title: $(this).find('td:nth-child(2) a').text(),
+                link: 'https://archive.org' + $(this).find('td:nth-child(2) a').attr('href')
+              });
+            }
+          });
+          resolve(show);
         }
       });
     });
