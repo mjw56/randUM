@@ -1,9 +1,9 @@
 import React from 'react';
-import $ from 'jquery';
 import style from '../utils/styles';
 import useSheet from 'react-jss';
 import Cassette from 'react-cassette-player';
 import { Promise } from 'es6-promise';
+import 'whatwg-fetch';
 
 export default React.createClass({
 
@@ -12,27 +12,34 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
-    Promise.resolve($.ajax('http://localhost:3001/api/track'))
-      .then((shows) => {
-
-        var show = shows[Math.floor(Math.random() * shows.length)];
-        var track = show.songs[Math.floor(Math.random() * show.songs.length)];
-
-        this.setState({
-          shows: shows,
-          show: show,
-          audio: track.link,
-          track: track.title,
-          showTitle: show.title
+    fetch('http://localhost:3001/api/track')
+      .then((response) => {
+        return response.json().then((json) => {
+          return json;
         });
+      })
+      .then(this._showsResponse)
+      .catch((error) => {
+        console.log('request failed', error)
       });
+  },
+
+  _showsResponse(shows) {
+    let show = shows[Math.floor(Math.random() * shows.length)];
+    let track = show.songs[Math.floor(Math.random() * show.songs.length)];
+
+    this.setState({
+      shows: shows,
+      show: show,
+      audio: track.link,
+      track: track.title,
+      showTitle: show.title
+    });
   },
 
   _getRandUMTrack() {
     var show = this.state.shows[Math.floor(Math.random() * this.state.shows.length)];
     var track = show.songs[Math.floor(Math.random() * show.songs.length)];
-
-    console.log('shows: ', this.state.shows);
 
     this.setState({
       show: show,
