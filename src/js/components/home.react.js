@@ -12,7 +12,7 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
-    fetch('http://localhost:3001/api/track')
+    fetch(process.env.RANDUM_TRACK_URL)
       .then((response) => {
         return response.json().then((json) => {
           return json;

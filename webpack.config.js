@@ -22,7 +22,8 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.json$/, loader: 'json-loader'},
-      { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', 'babel-loader'] }
+      { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', 'babel-loader'] },
+      { test: /\.js$/, loader: "envify-loader" }
     ]
   }
 };
