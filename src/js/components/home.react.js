@@ -4,6 +4,7 @@ import useSheet from 'react-jss';
 import Cassette from 'react-cassette-player';
 import { Promise } from 'es6-promise';
 import 'whatwg-fetch';
+import ShowList from './show-list.react';
 
 export default React.createClass({
 
@@ -58,6 +59,7 @@ export default React.createClass({
         <p className={this.sheet.classes['.track-title']}>{ this.state.track }</p>
         { this.state.audio ? <Cassette containerClass='jss-1' src={this.state.audio} /> : <div /> }
         <button onClick={this._getRandUMTrack}>Get randUM track></button>
+        <ShowList shows={this.state.shows} />
       </div>
     );
   }
