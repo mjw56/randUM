@@ -14,15 +14,9 @@ export default React.createClass({
 
   componentDidMount: function() {
     fetch(process.env.RANDUM_TRACK_URL)
-      .then((response) => {
-        return response.json().then((json) => {
-          return json;
-        });
-      })
+      .then(r => r.json())
       .then(this._showsResponse)
-      .catch((error) => {
-        console.log('request failed', error)
-      });
+      .catch(e => console.log(e))
   },
 
   _showsResponse(shows) {
